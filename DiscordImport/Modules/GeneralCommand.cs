@@ -20,5 +20,11 @@ public class ClockCommands:ModuleBase<SocketCommandContext>
         await ReplyAsync(localDate.ToString(CultureInfo.InvariantCulture) + " " + TimeZoneInfo.Local);
     }
 
+    [Command("ping")]
+    public async Task Ping()
+    {
+        await ReplyAsync("pong");
+    }
+
 
 }

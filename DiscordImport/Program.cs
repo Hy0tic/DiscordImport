@@ -3,10 +3,13 @@ using DiscordImport;
 using Microsoft.Extensions.Configuration;
 
 Console.WriteLine("Hello, World!");
-var token = "";
+
 var configuration = new ConfigurationBuilder()
     .SetBasePath(Directory.GetCurrentDirectory())
+    .AddJsonFile("appsettings.json")
     .Build();
+    
+var token = configuration.GetSection("token").Value;
 
 var _discord = DiscordClient.Instance
     .SetToken(token);
