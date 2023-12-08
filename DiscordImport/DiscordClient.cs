@@ -9,7 +9,7 @@ namespace DiscordImport{
         private DiscordSocketClient _client;
         private CommandService _commands;
         private IServiceProvider? _services;
-        private string token = "";
+        private string _token;
 
         private static readonly Lazy<DiscordClient> _lazyDiscordClient = new Lazy<DiscordClient>(() => new DiscordClient());
         private DiscordClient()
@@ -29,9 +29,9 @@ namespace DiscordImport{
             }
         }
 
-        public DiscordClient SetToken(string _token)
+        public DiscordClient SetToken(string token)
         {
-            token = _token;
+            _token = token;
             return this;
         }
 
@@ -47,22 +47,21 @@ namespace DiscordImport{
             _client.Log += Client_log;
             
             await RegisterCommandAsync();
-            await _client.LoginAsync(TokenType.Bot,token);
+            await _client.LoginAsync(TokenType.Bot,_token);
             await _client.StartAsync();
             await _client.SetGameAsync("beep boop");
             await _client.SetStatusAsync(UserStatus.DoNotDisturb);
             await Task.Delay(-1);
         }
 
-        public async Task RegisterCommandAsync()
+        private async Task RegisterCommandAsync()
         {
             _client.MessageReceived += HandleCommandAsync;
             await _commands.AddModulesAsync(System.Reflection.Assembly.GetEntryAssembly(),_services);
         }
 
-        public async Task HandleCommandAsync(SocketMessage message)
+        private async Task HandleCommandAsync(SocketMessage message)
         {
-
             var msg = (SocketUserMessage)message;
             var context = new SocketCommandContext(_client,msg);
             Console.WriteLine(msg);

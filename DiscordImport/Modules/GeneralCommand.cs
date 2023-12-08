@@ -9,11 +9,9 @@ namespace DiscordImport.Modules;
 public class GeneralCommand:ModuleBase<SocketCommandContext>
 {
     private readonly DiscordSocketClient _client;
-    private readonly CommandService _commands;
-    public GeneralCommand(DiscordSocketClient client, CommandService command)
+    public GeneralCommand(DiscordSocketClient client)
     {
         _client = client;
-        _commands = command;
     }
 
     [Command("time")]

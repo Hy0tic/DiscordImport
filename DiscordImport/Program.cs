@@ -11,7 +11,7 @@ var configuration = new ConfigurationBuilder()
     
 var token = configuration.GetSection("token").Value;
 
-var _discord = DiscordClient.Instance
+var discord = DiscordClient.Instance
     .SetToken(token);
 
-_discord.RunBotAsync().GetAwaiter().GetResult();
+discord.RunBotAsync().GetAwaiter().GetResult();
