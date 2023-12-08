@@ -8,3 +8,4 @@ riderModule.iml
 
 appsettings.json
 tools/**/**
+buildinfo.json
