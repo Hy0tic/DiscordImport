@@ -46,15 +46,14 @@ public class GeneralCommand:ModuleBase<SocketCommandContext>
             var messages = await channel.GetMessagesAsync().FlattenAsync();
             foreach (var message in messages)
             {
-                Console.WriteLine($"{message.Author.Username}: {message.Content}");
+                //Console.WriteLine($"{message.Author.Username}: {message.Content}");
                 var attachments = message.Attachments;
                 foreach (var a in attachments)
                 {
-                    Console.WriteLine(a.ProxyUrl);
-                    Console.WriteLine(a.Url);
-                    await destinationChannel.SendMessageAsync(a.ProxyUrl);
+                    await destinationChannel.SendMessageAsync(a.Url);
                 }
             }
+            await ReplyAsync("Import Complete!");
         }
         else
         {
