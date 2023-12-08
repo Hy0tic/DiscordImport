@@ -44,7 +44,7 @@ public class GeneralCommand:ModuleBase<SocketCommandContext>
         if (channel != null && destinationChannel != null)
         {
             var messages = await channel.GetMessagesAsync().FlattenAsync();
-            foreach (var message in messages)
+            foreach (var message in messages.Reverse())
             {
                 //Console.WriteLine($"{message.Author.Username}: {message.Content}");
                 var attachments = message.Attachments;
