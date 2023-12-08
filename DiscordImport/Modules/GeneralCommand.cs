@@ -62,8 +62,8 @@ public class GeneralCommand:ModuleBase<SocketCommandContext>
         }
     }
     
-    [Command("CheckChannel")]
-    public async Task CheckChannel(string channelId)
+    [Command("channelExist")]
+    public async Task ChannelExist(string channelId)
     {
         var channel = _client.GetChannel(ulong.Parse(channelId)) as IMessageChannel;
         var channelExist = (channel != null);
@@ -75,8 +75,6 @@ public class GeneralCommand:ModuleBase<SocketCommandContext>
                 break;
             case false:
                 await ReplyAsync("Channel not found.");
-                break;
-            default:
                 break;
         }
 
