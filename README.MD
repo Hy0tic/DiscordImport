@@ -1,3 +1,3 @@
 # DiscordImport
 
-Discord bot using Discord.NET 
+Discord bot made with Discord.NET 
