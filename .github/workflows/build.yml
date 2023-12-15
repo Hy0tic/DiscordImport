@@ -38,4 +38,25 @@ jobs:
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: |
           echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
-          docker push ${{secrets.DOCKER_USERNAME}}/discordimport
+          docker push ${{ secrets.DOCKER_USERNAME }}/discordimport
+      
+  deploy-to-VPS:
+    needs: [ build-and-test ]
+    environment:
+      name: "Production"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: SSH into VPS, pull docker image and run the image
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEYKEY }}
+          port: ${{ secrets.PORT }}
+          script: |
+            echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+            docker stop DiscordImport
+            docker rm DiscordImport
+            docker pull ${{ secrets.DOCKER_USERNAME }}/discordimport:latest
+            docker run -d --restart=always --name DiscordImport ${{ secrets.DOCKER_USERNAME }}/discordimport:latest   

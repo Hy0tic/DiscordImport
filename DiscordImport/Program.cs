@@ -8,8 +8,8 @@ var configuration = new ConfigurationBuilder()
     .SetBasePath(Directory.GetCurrentDirectory())
     .AddJsonFile("appsettings.json")
     .Build();
-    
-var token = configuration.GetSection("token").Value;
+
+var token = configuration["token"];
 
 var discord = DiscordClient.Instance
     .SetToken(token);
