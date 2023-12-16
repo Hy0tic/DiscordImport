@@ -55,4 +55,8 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.PORT }}
           script: |
-            whoami
+            echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+            docker stop DiscordImport
+            docker rm DiscordImport
+            docker pull ${{ secrets.DOCKER_USERNAME }}/discordimport:latest
+            docker run -d --restart=always --name DiscordImport ${{ secrets.DOCKER_USERNAME }}/discordimport:latest   
