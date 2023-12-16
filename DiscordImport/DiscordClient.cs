@@ -11,6 +11,7 @@ namespace DiscordImport{
         private CommandService _commands;
         private IServiceProvider? _services;
         private string _token;
+        private string openAIkey;
 
         private static readonly Lazy<DiscordClient> _lazyDiscordClient = new Lazy<DiscordClient>(() => new DiscordClient());
         private DiscordClient()
@@ -36,6 +37,12 @@ namespace DiscordImport{
             return this;
         }
 
+        public DiscordClient SetOpenAIkey(string apiKey)
+        {
+            openAIkey = apiKey;
+            return this;
+        }
+
         public async Task RunBotAsync()
         {
             _client = new DiscordSocketClient();
@@ -43,9 +50,10 @@ namespace DiscordImport{
             _services = new ServiceCollection()
                 .AddSingleton(_client)
                 .AddSingleton(_commands)
+                .ConfigureServices()
                 .AddChatGpt(options =>
                 {
-                    options.UseOpenAI(apiKey: "");
+                    options.UseOpenAI(apiKey: openAIkey);
                 })
                 .Services
                 .BuildServiceProvider();

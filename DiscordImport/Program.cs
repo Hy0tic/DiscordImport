@@ -10,8 +10,12 @@ var configuration = new ConfigurationBuilder()
     .Build();
 
 var token = configuration["token"];
+var openAIkey = configuration["openAIkey"];
+
+
 
 var discord = DiscordClient.Instance
+    .SetOpenAIkey(openAIkey)
     .SetToken(token);
 
 discord.RunBotAsync().GetAwaiter().GetResult();
