@@ -2,6 +2,7 @@
 using Discord.Commands;
 using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
+using ChatGptNet;
 
 namespace DiscordImport{
    public class DiscordClient
@@ -42,6 +43,11 @@ namespace DiscordImport{
             _services = new ServiceCollection()
                 .AddSingleton(_client)
                 .AddSingleton(_commands)
+                .AddChatGpt(options =>
+                {
+                    options.UseOpenAI(apiKey: "");
+                })
+                .Services
                 .BuildServiceProvider();
 
             _client.Log += Client_log;
